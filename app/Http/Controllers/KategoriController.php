@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -11,7 +12,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $kategoris = Kategori::all();
+        return view('admin.kategori.index', compact('kategoris'));
     }
 
     /**
@@ -19,7 +21,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kategori.create');
     }
 
     /**
@@ -27,7 +29,17 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|',
+            'id' => 'required|unique:App\Models\Kategori,id|max_digits:4',
+        ]);
+
+        Kategori::create([
+            'nama' => $request->nama,
+            'id' => $request->id,
+        ]);
+
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
     /**
@@ -43,7 +55,13 @@ class KategoriController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $kategori = Kategori::find($id);
+
+        if (!$kategori) {
+            return redirect()->route('admin.kategori.index')->with('error', 'Kategori tidak ditemukan');
+        }
+
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
     /**
@@ -51,7 +69,21 @@ class KategoriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|',
+        ]);
+
+        $kategori = Kategori::find($id);
+
+        if ($kategori) {
+            Kategori::where('id', $id)->update([
+                'id' => $kategori->id,
+                'nama' => $request->nama,
+            ]);
+            return redirect()->route('admin.kategori.index')->with('success', 'Kategori Berhasil Diupdate');
+        } else {
+            return redirect()->route('admin.kategori.index')->with('error', 'Kategori tidak ditemukan');
+        }
     }
 
     /**
@@ -59,6 +91,13 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $kategori = Kategori::find($id);
+
+        if ($kategori) {
+            $kategori->delete();
+            return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus');
+        } else {
+            return redirect()->route('admin.kategori.index')->with('error', 'Kategori tidak ditemukan');
+        }
     }
 }

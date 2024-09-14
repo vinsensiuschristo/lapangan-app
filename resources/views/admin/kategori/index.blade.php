@@ -107,9 +107,9 @@
                         <ul class="sidebar-menu" data-widget="tree">
                             <li class="menu-header-title">Lapangan</li>
                             <li><a href="{{ route('admin.lapangan.index') }}"><i class='fa fa-futbol-o'></i><span>Menu Lapangan</span></a></li>
-                            <li><a href="{{ route('admin.kategori.index') }}"><i class='zmdi zmdi-label'></i><span>Menu Kategori Lapangan</span></a></li>
+                            <li  class="active"><a href="{{ route('admin.kategori.index') }}"><i class='zmdi zmdi-label'></i><span>Menu Kategori Lapangan</span></a></li>
                             <li class="menu-header-title">Admin</li>
-                            <li class="active"><a href="{{ route('admin.user.index') }}"><i class="bx bx-user-circle"></i><span>Menu Admin</span></a></li>
+                            <li><a href="{{ route('admin.user.index') }}"><i class="bx bx-user-circle"></i><span>Menu Admin</span></a></li>
                             <li>
                                 <a href="{{ route('index.logout') }}">
                                                         <i class="bx bx-power-off"></i>
@@ -217,7 +217,7 @@
                                                 <h4 class="card-title mb-0">Dashboard <span
                                                     class="break-320-480-none">Menu Admin</span></h4>
                                             <div class="d-flex">
-                                                <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm mr-2">Tambah Admin</a>
+                                                <a href="{{ route('admin.kategori.create') }}" class="btn btn-primary btn-sm mr-2">Tambah Kategori</a>
                                             </div>
                                             </div>
 
@@ -225,22 +225,20 @@
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Nama</th>
-                                                        <th>Email</th>
+                                                        <th>Kategori</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($users as $user)
+                                                    @foreach($kategoris as $kategori)
                                                         <tr>
-                                                            <td>{{ $user->id }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ $user->email }}</td>
+                                                            <td>{{ $kategori->id }}</td>
+                                                            <td>{{ $kategori->nama }}</td>
                                                             <th>
-                                                                <a href="{{ route('admin.user.edit', $user->id) }}" class="action-item mr-2" data-bs-toggle="tooltip" title="Edit">
+                                                                <a href="{{ route('admin.kategori.edit', $kategori->id) }}" class="action-item mr-2" data-bs-toggle="tooltip" title="Edit">
                                                                 <i class="fa fa-edit"></i>
                                                                 </a>
-                                                                <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
+                                                                <form action="{{ route('admin.kategori.destroy', $kategori->id) }}" method="POST">
                                                                     @method('DELETE')
                                                                     @csrf
                                                                     <div class="actions ml-3">

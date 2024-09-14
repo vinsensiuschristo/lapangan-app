@@ -105,8 +105,9 @@
                     <!-- Sidebar Menu -->
                     <nav>
                         <ul class="sidebar-menu" data-widget="tree">
-                            <li class="menu-header-title">Dashboard</li>
-                            <li><a href=""><i class='bx bx-home-heart'></i><span>Menu Makanan</span></a></li>
+                            <li class="menu-header-title">Lapangan</li>
+                            <li><a href="{{ route('admin.lapangan.index') }}"><i class='fa fa-futbol-o'></i><span>Menu Lapangan</span></a></li>
+                            <li><a href="{{ route('admin.kategori.index') }}"><i class='zmdi zmdi-label'></i><span>Menu Kategori Lapangan</span></a></li>
                             <li class="menu-header-title">Admin</li>
                             <li class="active"><a href="{{ route('admin.user.index') }}"><i class="bx bx-user-circle"></i><span>Menu Admin</span></a></li>
                             <li>

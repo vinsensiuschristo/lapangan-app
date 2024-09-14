@@ -107,9 +107,9 @@
                         <ul class="sidebar-menu" data-widget="tree">
                             <li class="menu-header-title">Lapangan</li>
                             <li><a href="{{ route('admin.lapangan.index') }}"><i class='fa fa-futbol-o'></i><span>Menu Lapangan</span></a></li>
-                            <li><a href="{{ route('admin.kategori.index') }}"><i class='zmdi zmdi-label'></i><span>Menu Kategori Lapangan</span></a></li>
+                            <li class="active"><a href="{{ route('admin.kategori.index') }}"><i class='zmdi zmdi-label'></i><span>Menu Kategori Lapangan</span></a></li>
                             <li class="menu-header-title">Admin</li>
-                            <li class="active"><a href="{{ route('admin.user.index') }}"><i class="bx bx-user-circle"></i><span>Menu Admin</span></a></li>
+                            <li><a href="{{ route('admin.user.index') }}"><i class="bx bx-user-circle"></i><span>Menu Admin</span></a></li>
                             <li>
                                 <a href="{{ route('index.logout') }}">
                                                         <i class="bx bx-power-off"></i>
@@ -165,7 +165,7 @@
                             <div class="dropdown-menu profile dropdown-menu-right">
                                 <!-- User Profile Area -->
                                 <div class="user-profile-area">
-                                    <a href="" class="dropdown-item"><i class="bx bx-wrench font-15"
+                                    <a href="##" class="dropdown-item"><i class="bx bx-wrench font-15"
                                             aria-hidden="true"></i> Profile Setting</a>
                                 </div>
                             </div>
@@ -182,8 +182,15 @@
 
                             {{-- cek if message --}}
                             @if (session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
+                                <div class="alert alert-success" role="alert">
+                                    <strong>Sukses</strong> {{ session('success') }}
+                                </div>
+                            @endif
+
+                            {{-- cek if message --}}
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    <strong>Sukses</strong> {{ session('status') }}
                                 </div>
                             @endif
 
@@ -215,45 +222,33 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center mb-50">
                                                 <h4 class="card-title mb-0">Dashboard <span
-                                                    class="break-320-480-none">Menu Admin</span></h4>
-                                            <div class="d-flex">
-                                                <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm mr-2">Tambah Admin</a>
-                                            </div>
+                                                    class="break-320-480-none">Input Makanan</span></h4>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('admin.kategori.index') }}" class="btn btn-danger btn-sm mr-2">Kembali</a>
+                                                    </div>
                                             </div>
 
-                                            <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Nama</th>
-                                                        <th>Email</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($users as $user)
-                                                        <tr>
-                                                            <td>{{ $user->id }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ $user->email }}</td>
-                                                            <th>
-                                                                <a href="{{ route('admin.user.edit', $user->id) }}" class="action-item mr-2" data-bs-toggle="tooltip" title="Edit">
-                                                                <i class="fa fa-edit"></i>
-                                                                </a>
-                                                                <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
-                                                                    @method('DELETE')
-                                                                    @csrf
-                                                                    <div class="actions ml-3">
-                                                                        <button type="submit" class="action-item mr-2" data-bs-toggle="tooltip" title="Delete">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </th>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                            <form action="{{ route('admin.kategori.update', $kategori->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="form-group mb-3">
+                                                    <label for="id">ID</label>
+                                                    <input type="number" class="form-control @error('id') is-invalid @enderror" id="id" name="id" value="{{ $kategori->id }}" disabled>
+                                                    @error('id')
+                                                        <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label for="nama">Nama</label>
+                                                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $kategori->nama }}">
+                                                    @error('nama')
+                                                        <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Tambah</button>
+                                            </form>
 
                                         </div> <!-- end card body-->
                                     </div> <!-- end card -->
@@ -301,16 +296,16 @@
 
 
     <!-- Plugins Js -->
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/bundle.js"></script>
+    <script src="{{ asset('../js/jquery.min.js') }}"></script>
+    <script src="{{ asset('../js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('../js/bundle.js') }}"></script>
 
     <!-- Active JS -->
-    <script src="../js/settings.js"></script>
-    <script src="../js/scrool-bar.js"></script>
-    <script src="../js/todo-list.js"></script>
+    <script src="{{ asset('../js/settings.js') }}"></script>
+    <script src="{{ asset('../js/scrool-bar.js') }}"></script>
+    <script src="{{ asset('../js/todo-list.js') }}"></script>
     <!-- DATE TIME -->
-    <script src="../js/waktu.js"></script>
+    <script src="{{ asset('../js/waktu.js') }}"></script>
     <script src="{{ asset('../js/active.js') }}"></script>
 
     <!-- Inject JS -->
