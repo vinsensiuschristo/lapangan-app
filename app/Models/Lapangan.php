@@ -20,5 +20,7 @@ class Lapangan extends Model
         'harga',
         'kategori_id',
         'foto',
+        'foto2',
+        'foto3',
     ];
 }
