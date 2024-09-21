@@ -6,9 +6,11 @@ use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LapanganController::class, 'userIndex'])->name('user.index');
+Route::get('/lapangan/{id}', [LapanganController::class, 'userShow'])->name('user.show');
+Route::get('/about-us', [LapanganController::class, 'aboutUs'])->name('user.about-us');
+Route::get('/full-lapangan', [LapanganController::class, 'fullLapangan'])->name('user.lapangan');
+Route::get('/booking/{id}', [LapanganController::class, 'booking'])->name('user.booking');
 
 Route::get('/admin/login', [LoginController::class, 'index'])->name('login');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('index.login');

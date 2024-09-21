@@ -184,4 +184,63 @@ class LapanganController extends Controller
 
         return redirect()->route('admin.lapangan.index')->with('success', 'Lapangan berhasil dihapus');
     }
+
+    public function userIndex()
+    {
+        $kategoris = Kategori::all();
+        $lapangans = DB::table('lapangan')
+            ->join('kategori', 'lapangan.kategori_id', '=', 'kategori.id')
+            ->select('lapangan.*', 'kategori.nama as nama_kategori')
+            ->limit(8)
+            ->get();
+
+        // dd($lapangans);
+
+        return view('welcome', compact('kategoris', 'lapangans'));
+    }
+
+    public function userShow(string $id)
+    {
+        $lapangan = DB::table('lapangan')
+            ->join('kategori', 'lapangan.kategori_id', '=', 'kategori.id')
+            ->select('lapangan.*', 'kategori.nama as nama_kategori')
+            ->where('lapangan.id', $id)
+            ->get()->first();
+
+        $fotos = [
+            'foto' => $lapangan->foto,
+            'foto2' => $lapangan->foto2,
+            'foto3' => $lapangan->foto3,
+        ];
+
+        // dd($foto);
+
+        return view('user.show', compact('lapangan', 'fotos'));
+    }
+
+    public function aboutUs()
+    {
+        return view('user.about-us');
+    }
+
+    public function fullLapangan()
+    {
+        $lapangans = DB::table('lapangan')
+            ->join('kategori', 'lapangan.kategori_id', '=', 'kategori.id')
+            ->select('lapangan.*', 'kategori.nama as nama_kategori')
+            ->get();
+
+        return view('user.lapangan', compact('lapangans'));
+    }
+
+    public function booking(string $id)
+    {
+        $lapangan = DB::table('lapangan')
+            ->join('kategori', 'lapangan.kategori_id', '=', 'kategori.id')
+            ->select('lapangan.*', 'kategori.nama as nama_kategori')
+            ->where('lapangan.id', $id)
+            ->get()->first();
+
+        return view('user.booking', compact('lapangan'));
+    }
 }
